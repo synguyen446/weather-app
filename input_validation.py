@@ -1,6 +1,4 @@
-
-
-def input_string(prompt, target_character = False, max_character = False):
+def input_string(prompt, target_character=False, max_character=False):
     if not max_character and not target_character:
         user_input = input(prompt)
         return user_input
