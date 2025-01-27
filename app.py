@@ -15,10 +15,12 @@ def get_weather():
 
     location = get_location(city=city, state=state)
 
-    key = "49d3b589f1ad40f8abb60800252101"
-    url = "http://api.weatherapi.com/v1/forecast.json"
+    key = "08f7addab38b8791ddf8cd9d6ca5ba83"
+    url = "https://api.openweathermap.org/data/2.5x/forecast"
 
-    query = {"key": key, "q": f"{location.latitude},{location.longitude}", "day": 5}
+    query = {"appid": key,
+             "lat": f"{location.latitude}", 
+             "lon":f"{location.longitude}"}
 
     response = requests.get(url=url, params=query)
 
