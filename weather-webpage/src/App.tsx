@@ -30,8 +30,8 @@ function App() {
 
   return (
     <>
-      <TextEntry handleEvent={handleEventCity} id="City" />
-      <TextEntry handleEvent={handleEventState} id="State" />
+      <TextEntry handleEvent={handleEventCity} id="City/Address" />
+      <TextEntry handleEvent={handleEventState} id="State/ZipCode/Country" />
       <Button onClick={getWeather}>Get Weather</Button>
       {Object.entries(weather).map(([key, value]) => (
         <div key={key}>

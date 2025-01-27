@@ -1,7 +1,13 @@
 from flask import Flask, jsonify, request
 from utils import get_location, process_data
 from flask_cors import CORS
-import requests
+import requests, os
+from dotenv import load_dotenv
+
+
+def configure():
+    load_dotenv()
+
 
 app = Flask(__name__)
 CORS(app)
@@ -9,6 +15,8 @@ CORS(app)
 
 @app.route("/weather")
 def get_weather():
+
+    configure()
 
     city = request.args.get("city")
     state = request.args.get("state")
@@ -18,11 +26,10 @@ def get_weather():
     if not location:
         return jsonify(message="Error location not found!")
 
-    key = "08f7addab38b8791ddf8cd9d6ca5ba83"
     url = "https://api.openweathermap.org/data/3.0/onecall"
 
     query = {
-        "appid": key,
+        "appid": os.getenv("apikey"),
         "lat": f"{location.latitude}",
         "lon": f"{location.longitude}",
     }
