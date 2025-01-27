@@ -18,10 +18,11 @@ function App() {
   const getWeather = async () => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:5000/weather?city=${city}&state=${state}'`
+        `http://127.0.0.1:5000/weather?city=${city}&state=${state}`
       );
       const data = await response.json();
       setWeather(data);
+      console.log(weather)
     } catch (error) {
       console.error("Error fetching weather data: ", error);
     }
@@ -32,6 +33,11 @@ function App() {
       <TextEntry handleEvent={handleEventCity} id="City" />
       <TextEntry handleEvent={handleEventState} id="State" />
       <Button onClick={getWeather}>Get Weather</Button>
+      {Object.entries(weather).map(([key, value]) => (
+        <div key={key}>
+          <strong>{key}:</strong> {JSON.stringify(value)}
+        </div>
+      ))}
     </>
   );
 }

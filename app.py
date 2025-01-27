@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from utils import get_location
+from utils import get_location, process_data
 from flask_cors import CORS
 import requests
 
@@ -15,16 +15,21 @@ def get_weather():
 
     location = get_location(city=city, state=state)
 
-    key = "08f7addab38b8791ddf8cd9d6ca5ba83"
-    url = "https://api.openweathermap.org/data/2.5x/forecast"
+    if not location:
+        return jsonify(message="Error location not found!")
 
-    query = {"appid": key,
-             "lat": f"{location.latitude}", 
-             "lon":f"{location.longitude}"}
+    key = "08f7addab38b8791ddf8cd9d6ca5ba83"
+    url = "https://api.openweathermap.org/data/3.0/onecall"
+
+    query = {
+        "appid": key,
+        "lat": f"{location.latitude}",
+        "lon": f"{location.longitude}",
+    }
 
     response = requests.get(url=url, params=query)
 
-    return response.json()
+    return process_data(response.json(), location.address)
 
 
 if __name__ == "__main__":
